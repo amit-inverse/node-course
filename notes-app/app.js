@@ -17,7 +17,7 @@ console.log(notes);
 console.log(chalk.green('Success'));
 console.log(chalk.green.bold('Success'));
 console.log(chalk.bold.green('Success'));
-console.log(chalk.bold.green.inverse('Success'));
+console.log(chalk.bold.blue.inverse('Success'));
 
 const textBold = chalk.bold;
 const textInversed = chalk.inverse;
