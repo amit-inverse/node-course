@@ -1,13 +1,26 @@
-const fs = require('fs');
+// // const firstName = require('./utils.js');
+// const add = require('./utils.js');
 
-// fs.writeFileSync('notes.txt', 'This file was created by Node.js');
-// fs.writeFileSync('notes.txt', 'My name is Amit.');
+// // const name = 'Amit';
+
+// // console.log(name);
+
+// // console.log(firstName);
+
+// const sum = add(4, -2);
+
+// console.log(sum);
 
 //
-// Append a message to notes.txt
+// Challenge: Define and use a function in an new file
 //
-// 1. Use appendFileSync to append the file
-// 2. Run the script
-// 3. Check your work by opening the file and viewing the appended text
+// 1. Create a new file called notes.js
+// 2. Create getNotes function that returns "Your notes..."
+// 3. Export getNotes function
+// 4. From app.js, load in and call the function printing message to console
 
-fs.appendFileSync('notes.txt', ' I am a software developer.');
+const getNotes = require('./notes.js');
+
+const notes = getNotes();
+
+console.log(notes);
