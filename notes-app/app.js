@@ -1,18 +1,54 @@
 const chalk = require('chalk');
+const yargs = require('yargs');
 const getNotes = require('./notes.js');
 
-// const notes = getNotes();
-// console.log(notes);
+// customize yargs version
+yargs.version('1.1.0');
 
-// console.log(chalk.green('Success'));
+// create add command
+yargs.command({
+    command: 'add',
+    description: 'Add a new note',
+    handler: function () {
+        console.log('adding note');
+    },
+});
 
-console.log(process.argv);
-// console.log(process.argv[2]);
+// create remove command
+yargs.command({
+    command: 'remove',
+    description: 'Remove a note',
+    handler: function () {
+        console.log('removing note');
+    },
+});
 
-const command = process.argv[2];
+// add, remove, read, list
 
-if (command === 'add') {
-    console.log('Adding note...');
-} else if (command === 'remove') {
-    console.log('Removing note...');
-}
+//
+// Challenge: Add two new commands
+//
+// 1. Setup command to support "list" command (print placeholder messge for now)
+// 2. Setup command to support "read" command (print placeholder messge for now)
+// 3. Test your work by running both commands and ensure correct output
+
+// create list command
+yargs.command({
+    command: 'list',
+    description: 'List all notes',
+    handler: function () {
+        console.log('listing notes');
+    },
+});
+
+// create read command
+yargs.command({
+    command: 'read',
+    description: 'Reading a note',
+    handler: function () {
+        console.log('reading note');
+    },
+});
+
+// console.log(process.argv);
+console.log(yargs.argv);
