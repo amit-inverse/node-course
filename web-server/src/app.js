@@ -10,29 +10,35 @@ const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
 app.use(express.static(publicDirectoryPath));
 
-//
-// Goal: Create two more HTML files
-//
-// 1. Create a HTML page for about with "About" title
-// 2. Create a HTML page for help with "Help" title
-// 3. Remove the old route handlers for both
-// 4. Visit both in the browser to test your work
+app.set('view engine', 'hbs');
 
-// app.get('/help', (req, res) => {
-//     res.send([
-//         {
-//             name: 'Amit',
-//             age: 32,
-//         },
-//         {
-//             name: 'Rebecca',
-//         },
-//     ]);
-// });
+app.get('', (req, res) => {
+    res.render('index', {
+        title: 'Weather App',
+        name: 'Amit Kumar Das',
+    });
+});
 
-// app.get('/about', (req, res) => {
-//     res.send('<h1>about page</h1>');
-// });
+app.get('/about', (req, res) => {
+    res.render('about', {
+        title: 'About Me',
+        name: 'Amit Kumar Das',
+    });
+});
+
+//
+// Goal: Create a template for the help page
+//
+// 1. Setup a help template to render a help message to the screen
+// 2. Setup the help route and render the template with an example message
+// 3. Visit the route in the browser and see your help message print
+
+app.get('/help', (req, res) => {
+    res.render('help', {
+        title: 'Help',
+        message: 'This is some message.',
+    });
+});
 
 app.get('/weather', (req, res) => {
     res.send({
