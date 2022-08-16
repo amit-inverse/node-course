@@ -1,16 +1,18 @@
 const path = require('path');
 const express = require('express');
 
-// console.log(__dirname);
-// console.log(__filename);
-// console.log(path.join(__dirname, '../public'));
-
 const app = express();
 
+// Define paths for express config
 const publicDirectoryPath = path.join(__dirname, '../public');
+const viewsPath = path.join(__dirname, '../templates');
+
+// Setup static directory to serve
 app.use(express.static(publicDirectoryPath));
 
+// Setup handelbar engine and views location
 app.set('view engine', 'hbs');
+app.set('views', viewsPath);
 
 app.get('', (req, res) => {
     res.render('index', {
@@ -25,13 +27,6 @@ app.get('/about', (req, res) => {
         name: 'Amit Kumar Das',
     });
 });
-
-//
-// Goal: Create a template for the help page
-//
-// 1. Setup a help template to render a help message to the screen
-// 2. Setup the help route and render the template with an example message
-// 3. Visit the route in the browser and see your help message print
 
 app.get('/help', (req, res) => {
     res.render('help', {
