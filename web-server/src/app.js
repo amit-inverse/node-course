@@ -1,13 +1,8 @@
 const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
-
-//
-// Goal: Create a partial for the footer
-//
-// 1. Setup the template for the footer partial "Created by Some Name"
-// 2. Render the partial at the bottom of all these pages
-// 3. Test your work by visiting all these pages
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
 
 const app = express();
 
@@ -53,20 +48,32 @@ app.get('/weather', (req, res) => {
         });
     }
 
-    res.send({
-        forcast: 'Sunny',
-        location: 'Kolkata',
-        address: req.query.address,
+    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+        if (error) {
+            return res.send({ error });
+        }
+
+        forecast(latitude, longitude, (error, forcastData) => {
+            if (error) {
+                return res.send({ error });
+            }
+
+            res.send({
+                forcast: forcastData,
+                location,
+                address: req.query.address,
+            });
+        });
     });
 });
 
 //
-// Goal: Update weather endpoint to accept address
+// Goal: Wire up /weather
 //
-// 1. No address? Send back an error message
-// 2. Address? Send back the static JSON
-//  - Add address property onto JSON which return the provided address
-// 3. Test /weather and /weather?address=philadelphia
+// 1. Rewrite geocode/forecast into app.js
+// 2. Use the address to geocode
+// 3. Use the coordinates to get forecast
+// 4. Send back the real forecast and location
 
 app.get('/products', (req, res) => {
     if (!req.query.search) {
@@ -99,16 +106,6 @@ app.get('*', (req, res) => {
         message: 'Page not found.',
     });
 });
-
-//
-// Goal: Create and render a 404 page with handlebars
-//
-// 1. Setup the template to render the header and footer
-// 2. Setup the template to render an error message in a paragraph
-// 3. Render the template for both 404 rouothes
-//  - Page not found
-//  - Help article not found
-// 4. Test your work. Visit /what and /help/units
 
 app.listen(3000, () => {
     console.log('Server is up on port 3000.');
